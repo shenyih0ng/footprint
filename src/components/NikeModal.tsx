@@ -10,7 +10,7 @@ export interface NikeModalProps {
 function NikeModal({ addRoute, closeModal }: NikeModalProps) {
     const onImport = () => {
         // Test with dummy data
-        addRoute({ id: 'nike-route', data: DUMMY_ROUTE_DATA });
+        addRoute({ id: 'Nike+ Runs', data: DUMMY_ROUTE_DATA });
         closeModal()
     }
 
@@ -19,8 +19,8 @@ function NikeModal({ addRoute, closeModal }: NikeModalProps) {
             <div className="relative my-3 mx-auto w-auto max-w-3xl">
                 <div className="flex relative flex-col w-full bg-gray-100/75 rounded-lg border-0 outline-none focus:outline-none shadow-lg">
                     <div className="flex justify-between items-start p-5 rounded-t">
-                        <h3 className="text-2xl font-semibold">
-                            Import Nike+ Runs
+                        <h3 className="text-xl font-medium">
+                            import nike+ runs
                         </h3>
                     </div>
                     <div className="flex justify-end items-center p-6 mt-2 rounded-b">

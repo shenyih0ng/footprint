@@ -1,28 +1,39 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DEFAULT_VIEW_STATE } from '../constants';
+import { MAP_TRANSITION_DURATION, MAP_ZOOM, SG_LATLNG_CENTER } from '../constants';
 import { ViewStateProps } from '@deck.gl/core/lib/deck';
 
-export interface ViewPortState extends ViewStateProps {}
-export interface SetViewPortPayload extends Partial<ViewPortState> {}
+export type ViewPortState = Omit<
+  ViewStateProps,
+  'transitionInterpolator' | 'transitionEasing'
+>;
+export interface FlyToLocationPayload {
+    longitude: number
+    latitude: number
+    zoom: number
+}
 
-const initialViewPortState: ViewPortState = DEFAULT_VIEW_STATE;
+const initialViewPortState: ViewPortState = {
+    latitude: SG_LATLNG_CENTER[0],
+    longitude: SG_LATLNG_CENTER[1],
+    zoom: MAP_ZOOM,
+    transitionDuration: MAP_TRANSITION_DURATION
+}
 
 export const viewPortSlice = createSlice({
   name: 'viewport',
   initialState: initialViewPortState,
   reducers: {
-    setViewPort: (
+    flyToLocation: (
       state: ViewPortState,
-      action: PayloadAction<SetViewPortPayload>
+      action: PayloadAction<FlyToLocationPayload>
     ) => {
-      state = {
-        ...state,
-        ...action.payload
-      };
+        state.zoom = action.payload.zoom
+        state.latitude = action.payload.latitude
+        state.longitude = action.payload.longitude
     }
   }
 });
 
-export const { setViewPort } = viewPortSlice.actions;
+export const { flyToLocation } = viewPortSlice.actions;
 
 export default viewPortSlice.reducer;

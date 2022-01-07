@@ -7,6 +7,8 @@ import useAnimationFrame from "../hooks/AnimationFrame";
 import { State } from "../store/state"
 import { routesToTripsLayer } from "../lib/route";
 import { ViewPortState } from "../store/viewport";
+import { ViewStateProps } from '@deck.gl/core/lib/deck';
+import { TRANS_EASE_IN_CUBIC, TRANS_INTERPOLATOR } from "../constants";
 
 interface MapProps {
     currentViewport: ViewPortState,
@@ -24,12 +26,17 @@ function Map({ currentViewport, routeLayers, buildingOptions, geoLocationOptions
     const mapOnload = (event: MapLoadEvent): void => {
         addBuildingExtrusion(event, buildingOptions)
     }
-    console.log(currentViewport)
+    
+    const viewState: ViewStateProps  = {
+        ...currentViewport,
+        transitionInterpolator: TRANS_INTERPOLATOR,
+        transitionEasing: TRANS_EASE_IN_CUBIC
+    }
 
     return (
         <DeckGL
             ContextProvider={MapContext.Provider}
-            initialViewState={currentViewport}
+            initialViewState={viewState}
             controller={true}
             layers={ [...routeLayers.map(routesToTripsLayer(animationTime))]}
         >

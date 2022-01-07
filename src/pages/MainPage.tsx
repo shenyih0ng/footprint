@@ -1,6 +1,7 @@
+import LayerController from "../components/LayerController";
 import Map from "../components/Map";
 import SideMenu from "../components/SideMenu";
-import { DEFAULT_BUILDING_OPTIONS, DEFAULT_GEOLOCATION_OPTIONS, MAP_ANIMATION_LENGTH, MAP_ANIMATION_SPEED, MAP_STYLE, TRIPS_LAYER_DEFAULT } from "../constants";
+import { DEFAULT_BUILDING_OPTIONS, DEFAULT_GEOLOCATION_OPTIONS, MAP_ANIMATION_LENGTH, MAP_ANIMATION_SPEED, MAP_STYLE } from "../constants";
 
 function MainPage() {
     return (<>
@@ -11,6 +12,7 @@ function MainPage() {
             mapStyle={MAP_STYLE}
             buildingOptions={DEFAULT_BUILDING_OPTIONS}
             geoLocationOptions={DEFAULT_GEOLOCATION_OPTIONS} />
+        <LayerController routeLayers={[]} />
     </>);
 }
 

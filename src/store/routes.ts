@@ -22,16 +22,19 @@ export const routeSlice = createSlice({
   reducers: {
     addRoute: (state: RouteState, action: PayloadAction<AddRoutePayload>) => {
       const { id, data }: AddRoutePayload = action.payload;
-      state.layers.push({
-        id,
-        data,
-        trailLength: 400,
-        capRounded: true,
-        jointRounded: true,
-        widthMinPixels: 2,
-        opacity: DEFAULT_TRAIL_OPTIONS.opacity,
-        getColor: DEFAULT_TRAIL_OPTIONS.color
-      });
+      if (!state.layers.find(layer => layer.id === id)) {
+        state.layers.push({
+          id,
+          data,
+          // TODO should shift this to constants
+          trailLength: 400,
+          capRounded: true,
+          jointRounded: true,
+          widthMinPixels: 2,
+          opacity: DEFAULT_TRAIL_OPTIONS.opacity,
+          getColor: DEFAULT_TRAIL_OPTIONS.color
+        });
+      }
     }
   }
 });
