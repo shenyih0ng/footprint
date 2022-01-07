@@ -4,32 +4,23 @@ import { MAP_PIN_POINT_ZOOM } from '../constants';
 
 interface ViewStateProps {
   viewProps: InitialViewStateProps,
-  geoLocationProps?: PositionOptions
+  geoPosition: GeolocationPosition | null
 }
 
 function useViewState(
-  {viewProps, geoLocationProps}: ViewStateProps
+  {viewProps, geoPosition}: ViewStateProps
 ): InitialViewStateProps {
   const [viewState, setViewState ] = useState<InitialViewStateProps>(viewProps);
 
   useEffect(() => {
-    const handlePosChange = (pos: GeolocationPosition) => setViewState({
+    if (geoPosition == null) return;
+    setViewState({
       ...viewState,
-      latitude: pos.coords.latitude,
-      longitude: pos.coords.longitude,
+      latitude: geoPosition.coords.latitude,
+      longitude: geoPosition.coords.longitude,
       zoom: MAP_PIN_POINT_ZOOM
     });
-    const handlePosChangeError = (error: GeolocationPositionError) =>
-      console.error(error);
-
-    const watchId: number = navigator.geolocation.watchPosition(
-      handlePosChange,
-      handlePosChangeError,
-      geoLocationProps
-    );
-
-    return () => navigator.geolocation.clearWatch(watchId);
-  });
+  }, [geoPosition]);
 
   return viewState;
 }

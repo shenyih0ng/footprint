@@ -1,7 +1,8 @@
 import { MapLoadEvent } from 'react-map-gl';
 import { TripsLayerProps } from '@deck.gl/geo-layers/trips-layer/trips-layer'
-import { TripsLayer } from 'deck.gl';
-import { TRIPS_LAYER_DEFAULT } from './constants';
+import { TripsLayer, ScatterplotLayer, RGBAColor } from 'deck.gl';
+import { LIVE_WALK_DATA_INTERFACE, TRIPS_LAYER_DEFAULT, WALK_LAYER_DEFAULT } from './constants';
+import { ScatterplotLayerProps } from '@deck.gl/layers';
 
 export interface BuildingOptions {
   color: string;
@@ -53,4 +54,16 @@ export function createTripsLayer(layerProps: Partial<TripsLayerProps<any>>) {
         ...TRIPS_LAYER_DEFAULT,
         ...layerProps
     })
+}
+
+export function createLiveWalkLayer(layerProps: Partial<ScatterplotLayerProps<any>>, liveWalkPoints: LIVE_WALK_DATA_INTERFACE[]) {
+  return new ScatterplotLayer({
+    ...WALK_LAYER_DEFAULT,
+    ...layerProps,
+    data: liveWalkPoints,
+    getPosition: (d: any) => d.coordinates,
+    getRadius: (d: any) => 10,
+    getFillColor: (d: any) => [20, 183, 230],
+    getLineCOlor: (d: any) => [255, 255, 255]
+  })
 }
