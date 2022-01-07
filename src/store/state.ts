@@ -1,7 +1,9 @@
+import { GeoPositionState } from "./geopos";
 import { RouteState } from "./routes";
 import { ViewPortState } from "./viewport";
 
 export interface State {
   routes: RouteState
-  viewport: ViewPortState
+  viewport: ViewPortState,
+  geopos: GeoPositionState
 }

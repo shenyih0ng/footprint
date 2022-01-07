@@ -1,11 +1,7 @@
+import { ScatterplotLayer } from 'deck.gl';
 import { MapLoadEvent } from 'react-map-gl';
-<<<<<<< HEAD
-import { TripsLayerProps } from '@deck.gl/geo-layers/trips-layer/trips-layer'
-import { TripsLayer, ScatterplotLayer, RGBAColor } from 'deck.gl';
-import { LIVE_WALK_DATA_INTERFACE, TRIPS_LAYER_DEFAULT, WALK_LAYER_DEFAULT } from './constants';
-import { ScatterplotLayerProps } from '@deck.gl/layers';
-=======
->>>>>>> frontend
+import { LIVE_WALK_DATA_INTERFACE, WALK_LAYER_DEFAULT } from './constants';
+import { ScatterplotLayerProps } from '@deck.gl/layers/scatterplot-layer/scatterplot-layer'
 
 export interface BuildingOptions {
   color: string;

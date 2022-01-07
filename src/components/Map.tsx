@@ -2,13 +2,6 @@ import DeckGL from "deck.gl";
 import { connect } from 'react-redux'
 import { TripsLayerProps } from '@deck.gl/geo-layers/trips-layer/trips-layer'
 import { StaticMap, NavigationControl, _MapContext as MapContext, MapLoadEvent } from "react-map-gl";
-<<<<<<< HEAD
-import useViewState from "../hooks/ViewState";
-import { addBuildingExtrusion, BuildingOptions, createTripsLayer, createLiveWalkLayer } from "../utils";
-import useAnimationFrame from "../hooks/AnimationFrame";
-import useLiveWalk from "../hooks/LiveWalk";
-import useGeoLocation from "../hooks/GeoLocation";
-=======
 import { addBuildingExtrusion, BuildingOptions } from "../utils";
 import useAnimationFrame from "../hooks/AnimationFrame";
 import { State } from "../store/state"
@@ -16,19 +9,18 @@ import { routesToTripsLayer } from "../lib/route";
 import { ViewPortState } from "../store/viewport";
 import { ViewStateProps } from '@deck.gl/core/lib/deck';
 import { TRANS_EASE_IN_CUBIC, TRANS_INTERPOLATOR } from "../constants";
->>>>>>> frontend
 
 interface MapProps {
     currentViewport: ViewPortState,
     routeLayers: TripsLayerProps<any>[],
     buildingOptions: BuildingOptions,
-    geoLocationOptions: PositionOptions,
+    geoPos: GeolocationPosition | null,
     mapStyle: string,
     animationLoopLength: number,
     animationSpeed: number
 }
 
-function Map({ currentViewport, routeLayers, buildingOptions, geoLocationOptions, mapStyle, animationLoopLength, animationSpeed }: MapProps) {
+function Map({ currentViewport, routeLayers, buildingOptions, geoPos, mapStyle, animationLoopLength, animationSpeed }: MapProps) {
     // Animation
     const animationTime: number = useAnimationFrame({ animationLoopLength, animationSpeed })
     const mapOnload = (event: MapLoadEvent): void => {

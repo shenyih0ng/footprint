@@ -1,11 +1,6 @@
 import { FlyToInterpolator, RGBAColor } from 'deck.gl';
 import { BuildingOptions } from './utils';
-<<<<<<< HEAD
-import { ViewStateProps } from '@deck.gl/core/lib/deck';
-import { TripsLayerProps } from '@deck.gl/geo-layers/trips-layer/trips-layer'
 import { ScatterplotLayerProps } from '@deck.gl/layers/scatterplot-layer/scatterplot-layer'
-=======
->>>>>>> frontend
 
 export const MAP_STYLE: string = 'mapbox://styles/junyi00/cky44vojs0nn414nqy3x7tbr1';
 export const MAP_ZOOM: number = 16;
