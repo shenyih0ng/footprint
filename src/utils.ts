@@ -1,7 +1,4 @@
 import { MapLoadEvent } from 'react-map-gl';
-import { TripsLayerProps } from '@deck.gl/geo-layers/trips-layer/trips-layer'
-import { TripsLayer } from 'deck.gl';
-import { TRIPS_LAYER_DEFAULT } from './constants';
 
 export interface BuildingOptions {
   color: string;
@@ -46,11 +43,4 @@ export function addBuildingExtrusion(
       'fill-extrusion-opacity': 0.2
     }
   });
-}
-
-export function createTripsLayer(layerProps: Partial<TripsLayerProps<any>>) {
-    return new TripsLayer({
-        ...TRIPS_LAYER_DEFAULT,
-        ...layerProps
-    })
 }

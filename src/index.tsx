@@ -8,17 +8,22 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import store from './store'
+import { Provider } from 'react-redux'
+
 import LandingPage from './pages/LandingPage';
 import MainPage from './pages/MainPage';
 
 const rootElement = document.getElementById('root');
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/map" element={<MainPage />} />
-    </Routes>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/map" element={<MainPage />} />
+      </Routes>
+    </BrowserRouter>
+  </Provider>,
   rootElement
 );

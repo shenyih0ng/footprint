@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@danmarshall/deckgl-typings": "^4.9.13",
+    "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -53,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-modal": "^3.13.1",
     "eslint-plugin-tailwindcss": "^3.0.4"
   }
 }
