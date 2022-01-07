@@ -59,4 +59,3 @@ export const TRIPS_LAYER_DEFAULT: TripsLayerProps<any> = {
   opacity: DEFAULT_TRAIL_OPTIONS.opacity,
   currentTime: 100
 }
-

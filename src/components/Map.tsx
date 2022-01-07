@@ -1,15 +1,16 @@
 import DeckGL from "deck.gl";
-import { useState } from "react";
-import { ViewStateProps } from '@deck.gl/core/lib/deck';
+import { connect } from 'react-redux'
 import { TripsLayerProps } from '@deck.gl/geo-layers/trips-layer/trips-layer'
 import { StaticMap, NavigationControl, _MapContext as MapContext, MapLoadEvent } from "react-map-gl";
-import useViewState from "../hooks/ViewState";
-import { addBuildingExtrusion, BuildingOptions, createTripsLayer } from "../utils";
+import { addBuildingExtrusion, BuildingOptions } from "../utils";
 import useAnimationFrame from "../hooks/AnimationFrame";
+import { State } from "../store/state"
+import { routesToTripsLayer } from "../lib/route";
+import { ViewPortState } from "../store/viewport";
 
 interface MapProps {
-    tripsLayers: TripsLayerProps<any>[],
-    initialViewState: ViewStateProps,
+    currentViewport: ViewPortState,
+    routeLayers: TripsLayerProps<any>[],
     buildingOptions: BuildingOptions,
     geoLocationOptions: PositionOptions,
     mapStyle: string,
@@ -17,30 +18,23 @@ interface MapProps {
     animationSpeed: number
 }
 
-function Map({ tripsLayers, initialViewState, buildingOptions, geoLocationOptions, mapStyle, animationLoopLength, animationSpeed }: MapProps) {
+function Map({ currentViewport, routeLayers, buildingOptions, geoLocationOptions, mapStyle, animationLoopLength, animationSpeed }: MapProps) {
     // Animation
     const animationTime: number = useAnimationFrame({ animationLoopLength, animationSpeed })
-    const [tLayers] = useState(tripsLayers);
-    const viewState = useViewState({ viewProps: initialViewState, geoLocationProps: geoLocationOptions })
-
     const mapOnload = (event: MapLoadEvent): void => {
         addBuildingExtrusion(event, buildingOptions)
     }
+    console.log(currentViewport)
 
     return (
         <DeckGL
             ContextProvider={MapContext.Provider}
-            initialViewState={viewState}
+            initialViewState={currentViewport}
             controller={true}
-            layers={
-                tLayers.map(props => createTripsLayer({
-                    ...props,
-                    currentTime: animationTime
-                }))
-            }
+            layers={ [...routeLayers.map(routesToTripsLayer(animationTime))]}
         >
             <NavigationControl className="absolute top-2 right-2" />
-            {/* Add live user marker */}
+            {/* TODO Add live user marker */}
             <StaticMap
                 onLoad={mapOnload}
                 attributionControl={false}
@@ -50,4 +44,11 @@ function Map({ tripsLayers, initialViewState, buildingOptions, geoLocationOption
     );
 }
 
-export default Map;
+export default connect(
+    (state: State) => {
+        return {
+            currentViewport: state.viewport,
+            routeLayers: state.routes.layers
+        }
+    },
+)(Map);
