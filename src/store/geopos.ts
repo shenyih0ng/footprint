@@ -1,24 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface GeoPositionState {
-    data: GeolocationPosition | null;
+    data: {
+      latitude: number,
+      longitude: number,
+      altitude: number | null,
+    } | null;
 }
   
 export interface SetGeoPositionPayload {
-    geopos: GeolocationPosition
+    latitude: number,
+    longitude: number,
+    altitude: number | null,
   }
 
-const geposInitialState: GeoPositionState = {
+const geoposInitialState: GeoPositionState = {
     data: null
 };
 
 export const geposSlice = createSlice({
     name: 'geopos',
-    initialState: geposInitialState,
+    initialState: geoposInitialState,
     reducers: {
       setGeoPos: (state: GeoPositionState, action: PayloadAction<SetGeoPositionPayload>) => {
-        const { geopos }: SetGeoPositionPayload = action.payload;
-        state.data = geopos;
+        const data: SetGeoPositionPayload = action.payload;
+        state.data = data;
       }
     }
 });

@@ -11,7 +11,12 @@ function GeoLocationService({ setGeoPos, geoLocationProps }: GeoLocationServiceP
   useEffect(() => {
 
     const handlePosChange = (pos: GeolocationPosition) => {
-      setGeoPos({ geopos: pos })
+      console.log('test')
+      setGeoPos({ 
+        latitude: pos.coords.latitude, 
+        longitude: pos.coords.longitude, 
+        altitude: pos.coords.altitude
+      })
     };
     const handlePosChangeError = (error: GeolocationPositionError) =>
       console.error(error);
@@ -23,7 +28,7 @@ function GeoLocationService({ setGeoPos, geoLocationProps }: GeoLocationServiceP
     );
   });
 
-  return (<div></div>);
+  return null;
 }
 
 export default connect(

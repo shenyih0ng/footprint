@@ -14,13 +14,12 @@ interface MapProps {
     currentViewport: ViewPortState,
     routeLayers: TripsLayerProps<any>[],
     buildingOptions: BuildingOptions,
-    geoPos: GeolocationPosition | null,
     mapStyle: string,
     animationLoopLength: number,
     animationSpeed: number
 }
 
-function Map({ currentViewport, routeLayers, buildingOptions, geoPos, mapStyle, animationLoopLength, animationSpeed }: MapProps) {
+function Map({ currentViewport, routeLayers, buildingOptions, mapStyle, animationLoopLength, animationSpeed }: MapProps) {
     // Animation
     const animationTime: number = useAnimationFrame({ animationLoopLength, animationSpeed })
     const mapOnload = (event: MapLoadEvent): void => {
