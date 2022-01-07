@@ -1,39 +1,53 @@
-import DeckGL, { FlyToInterpolator } from "deck.gl";
-import { ViewStateProps } from "@deck.gl/core/lib/deck";
-import { StaticMap, NavigationControl, _MapContext as MapContext } from "react-map-gl";
-import { MAP_STYLE, MAP_TRANSITION_DURATION, MAP_ZOOM, SG_LATLNG_CENTER, TRANS_EASE_IN_CUBIC } from "../constants";
+import DeckGL from "deck.gl";
+import { useState } from "react";
+import { ViewStateProps } from '@deck.gl/core/lib/deck';
+import { TripsLayerProps } from '@deck.gl/geo-layers/trips-layer/trips-layer'
+import { StaticMap, NavigationControl, _MapContext as MapContext, MapLoadEvent } from "react-map-gl";
 import useViewState from "../hooks/ViewState";
+import { addBuildingExtrusion, BuildingOptions, createTripsLayer } from "../utils";
+import useAnimationFrame from "../hooks/AnimationFrame";
 
-const DEFAULT_VIEW_STATE: ViewStateProps = {
-    latitude: SG_LATLNG_CENTER[0],
-    longitude: SG_LATLNG_CENTER[1],
-    zoom: MAP_ZOOM,
-    // transition settings
-    transitionDuration: MAP_TRANSITION_DURATION,
-    transitionInterpolator: new FlyToInterpolator(),
-    transitionEasing: TRANS_EASE_IN_CUBIC
+interface MapProps {
+    tripsLayers: TripsLayerProps<any>[],
+    initialViewState: ViewStateProps,
+    buildingOptions: BuildingOptions,
+    geoLocationOptions: PositionOptions,
+    mapStyle: string,
+    animationLoopLength: number,
+    animationSpeed: number
 }
 
-const DEFAULT_GEOLOCATION_OPTIONS: PositionOptions = {
-    maximumAge: Infinity,
-    enableHighAccuracy: true
-}
+function Map({ tripsLayers, initialViewState, buildingOptions, geoLocationOptions, mapStyle, animationLoopLength, animationSpeed }: MapProps) {
+    // Animation
+    const animationTime: number = useAnimationFrame({ animationLoopLength, animationSpeed })
+    const [tLayers] = useState(tripsLayers);
+    const viewState = useViewState({ viewProps: initialViewState, geoLocationProps: geoLocationOptions })
 
-function Map() {
-    const viewState = useViewState({ viewProps: DEFAULT_VIEW_STATE, geoLocationProps: DEFAULT_GEOLOCATION_OPTIONS })
+    const mapOnload = (event: MapLoadEvent): void => {
+        addBuildingExtrusion(event, buildingOptions)
+    }
+
     return (
         <DeckGL
             ContextProvider={MapContext.Provider}
             initialViewState={viewState}
             controller={true}
+            layers={
+                tLayers.map(props => createTripsLayer({
+                    ...props,
+                    currentTime: animationTime
+                }))
+            }
         >
             <NavigationControl className="absolute top-2 right-2" />
+            {/* Add live user marker */}
             <StaticMap
+                onLoad={mapOnload}
                 attributionControl={false}
-                mapStyle={MAP_STYLE}
+                mapStyle={mapStyle}
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN} />
         </DeckGL >
-    )
+    );
 }
 
 export default Map;
