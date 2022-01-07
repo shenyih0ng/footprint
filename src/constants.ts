@@ -1,8 +1,11 @@
 import { FlyToInterpolator, RGBAColor } from 'deck.gl';
 import { BuildingOptions } from './utils';
+<<<<<<< HEAD
 import { ViewStateProps } from '@deck.gl/core/lib/deck';
 import { TripsLayerProps } from '@deck.gl/geo-layers/trips-layer/trips-layer'
 import { ScatterplotLayerProps } from '@deck.gl/layers/scatterplot-layer/scatterplot-layer'
+=======
+>>>>>>> frontend
 
 export const MAP_STYLE: string = 'mapbox://styles/junyi00/cky44vojs0nn414nqy3x7tbr1';
 export const MAP_ZOOM: number = 16;
@@ -30,15 +33,7 @@ export const TRANS_EASE_IN_CUBIC = (x: number): number => {
   return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 };
 
-export const DEFAULT_VIEW_STATE: ViewStateProps = {
-  latitude: SG_LATLNG_CENTER[0],
-  longitude: SG_LATLNG_CENTER[1],
-  zoom: MAP_ZOOM,
-  // transition settings
-  transitionDuration: MAP_TRANSITION_DURATION,
-  transitionInterpolator: new FlyToInterpolator(),
-  transitionEasing: TRANS_EASE_IN_CUBIC
-};
+export const TRANS_INTERPOLATOR = new FlyToInterpolator();
 
 export const DEFAULT_GEOLOCATION_OPTIONS: PositionOptions = {
   maximumAge: 1, // should be default, just in case
@@ -47,21 +42,6 @@ export const DEFAULT_GEOLOCATION_OPTIONS: PositionOptions = {
 };
 
 // Layers
-
-export const TRIPS_LAYER_DEFAULT: TripsLayerProps<any> = {
-  id: 'trips-layer',
-  // test data
-  data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf.trips.json',
-  getTimestamps: (d: any) => d.waypoints.map((p: any) => p.timestamp - 1554772579000),
-  getPath: d => d.waypoints.map((p: any) => p.coordinates),
-  trailLength: 400,
-  capRounded: true,
-  getColor: DEFAULT_TRAIL_OPTIONS.color,
-  jointRounded: true,
-  widthMinPixels: 8,
-  opacity: DEFAULT_TRAIL_OPTIONS.opacity,
-  currentTime: 100
-}
 
 export const WALK_LAYER_DEFAULT: ScatterplotLayerProps<any> = {
   radiusScale: 0.5,

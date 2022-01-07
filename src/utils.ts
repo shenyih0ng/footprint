@@ -1,8 +1,11 @@
 import { MapLoadEvent } from 'react-map-gl';
+<<<<<<< HEAD
 import { TripsLayerProps } from '@deck.gl/geo-layers/trips-layer/trips-layer'
 import { TripsLayer, ScatterplotLayer, RGBAColor } from 'deck.gl';
 import { LIVE_WALK_DATA_INTERFACE, TRIPS_LAYER_DEFAULT, WALK_LAYER_DEFAULT } from './constants';
 import { ScatterplotLayerProps } from '@deck.gl/layers';
+=======
+>>>>>>> frontend
 
 export interface BuildingOptions {
   color: string;
@@ -47,13 +50,6 @@ export function addBuildingExtrusion(
       'fill-extrusion-opacity': 0.2
     }
   });
-}
-
-export function createTripsLayer(layerProps: Partial<TripsLayerProps<any>>) {
-    return new TripsLayer({
-        ...TRIPS_LAYER_DEFAULT,
-        ...layerProps
-    })
 }
 
 export function createLiveWalkLayer(layerProps: Partial<ScatterplotLayerProps<any>>, liveWalkPoints: LIVE_WALK_DATA_INTERFACE[]) {
