@@ -30,6 +30,7 @@ export const geposSlice = createSlice({
     ) => {
       const { latitude, longitude, altitude }: SetGeoPositionPayload =
         action.payload;
+      if (latitude == state.latitude && longitude == state.longitude) return;
       state.longitude = longitude;
       state.latitude = latitude;
       state.altitude = altitude;

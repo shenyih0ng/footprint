@@ -35,14 +35,14 @@ export const TRANS_INTERPOLATOR = new FlyToInterpolator();
 
 export const DEFAULT_GEOLOCATION_OPTIONS: PositionOptions = {
   maximumAge: 0,
-  timeout: 5000,
-  enableHighAccuracy: true
+  timeout: 500,
+  enableHighAccuracy: false
 };
 
 // Layers
 
 export const WALK_LAYER_DEFAULT: ScatterplotLayerProps<any> = {
-  radiusScale: 0.5,
+  radiusScale: 0.2,
   lineWidthScale: 0, 
   stroked: false,
   filled: true,

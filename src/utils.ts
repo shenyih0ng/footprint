@@ -1,4 +1,8 @@
 import { MapLoadEvent } from 'react-map-gl';
+import { ScatterplotLayer, ScatterplotLayerProps } from '@deck.gl/layers';
+import { WALK_LAYER_DEFAULT } from './constants';
+import { GeoPositionState } from './store/geopos';
+import { useEffect, useState } from 'react';
 
 export interface BuildingOptions {
   color: string;
@@ -45,16 +49,16 @@ export function addBuildingExtrusion(
   });
 }
 
-/*
-export function createLiveWalkLayer(layerProps: Partial<ScatterplotLayerProps<any>>, liveWalkPoints: LIVE_WALK_DATA_INTERFACE[]) {
+
+export function createLiveWalkLayer(layerProps: Partial<ScatterplotLayerProps<any>>, walkData: {coordinates:[number, number]}[]) {
+
   return new ScatterplotLayer({
     ...WALK_LAYER_DEFAULT,
     ...layerProps,
-    data: liveWalkPoints,
+    data: walkData,
     getPosition: (d: any) => d.coordinates,
     getRadius: (d: any) => 10,
     getFillColor: (d: any) => [20, 183, 230],
     getLineCOlor: (d: any) => [255, 255, 255]
   })
 }
-*/
