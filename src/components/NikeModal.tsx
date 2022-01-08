@@ -9,8 +9,9 @@ export interface NikeModalProps {
 
 function NikeModal({ addRoute, closeModal }: NikeModalProps) {
     const onImport = () => {
-        // Test with dummy data
-        getAllRuns().then(data => addRoute({ id: 'Nike+ Runs', data }))
+        getAllRuns().then(data => {
+            addRoute({ id: 'Nike+ Runs', data })
+        })
         closeModal()
     }
 

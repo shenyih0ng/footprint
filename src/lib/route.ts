@@ -33,7 +33,7 @@ export const routesToTripsLayer =
   (routeProp: TripsLayerProps<any>) =>
     new TripsLayer({
       ...routeProp,
-      trailLength: 10000,
+      trailLength: 430000, 
       widthMinPixels: 2.0,
       getPath: routeGetPath,
       getTimestamps: routeGetTimestamps,

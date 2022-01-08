@@ -20,12 +20,10 @@ export function addBuildingExtrusion(
     'source-layer': 'building',
     filter: ['==', 'extrude', 'true'],
     type: 'fill-extrusion',
-    minzoom: 10,
+    minzoom: 1,
     paint: {
       'fill-extrusion-color': buildingOptions.color,
-
-      // use an 'interpolate' expression to add a smooth transition effect to the
-      // buildings as the user zooms in
+      'fill-extrusion-opacity': 0.3,
       'fill-extrusion-height': [
         'interpolate',
         ['linear'],
@@ -43,15 +41,15 @@ export function addBuildingExtrusion(
         0,
         10.05,
         ['*', buildingOptions.heightMultiplier, ['get', 'min_height']]
-      ],
-      'fill-extrusion-opacity': 0.2
+      ]
     }
   });
 }
 
-
-export function createLiveWalkLayer(layerProps: Partial<ScatterplotLayerProps<any>>, walkData: {coordinates:[number, number]}[]) {
-
+export function createLiveWalkLayer(
+  layerProps: Partial<ScatterplotLayerProps<any>>,
+  walkData: { coordinates: [number, number] }[]
+) {
   return new ScatterplotLayer({
     ...WALK_LAYER_DEFAULT,
     ...layerProps,
@@ -60,5 +58,5 @@ export function createLiveWalkLayer(layerProps: Partial<ScatterplotLayerProps<an
     getRadius: (d: any) => 10,
     getFillColor: (d: any) => [20, 183, 230],
     getLineCOlor: (d: any) => [255, 255, 255]
-  })
+  });
 }
