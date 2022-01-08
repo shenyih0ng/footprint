@@ -1,41 +1,57 @@
-import React, { useEffect } from 'react';
-import { setGeoPos, SetGeoPositionPayload } from '../store/geopos'
+import {  useEffect } from 'react';
+import {
+  GeoPositionState,
+  setGeoPos,
+  SetGeoPositionPayload
+} from '../store/geopos';
 import { connect } from 'react-redux';
+import { State } from '../store/state';
 
 interface GeoLocationServiceProps {
-  setGeoPos: (payload: SetGeoPositionPayload) => void,
-  geoLocationProps?: PositionOptions
-};
+  currentGeoPos: GeoPositionState;
+  setGeoPos: (payload: SetGeoPositionPayload) => void;
+  geoLocationProps?: PositionOptions;
+}
 
-function GeoLocationService({ setGeoPos, geoLocationProps }: GeoLocationServiceProps) {
+function GeoLocationService({
+  currentGeoPos,
+  setGeoPos,
+  geoLocationProps
+}: GeoLocationServiceProps) {
   useEffect(() => {
-
     const handlePosChange = (pos: GeolocationPosition) => {
-      console.log('test')
-      setGeoPos({ 
-        latitude: pos.coords.latitude, 
-        longitude: pos.coords.longitude, 
-        altitude: pos.coords.altitude
-      })
+      setGeoPos({
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+        altitude: pos.coords.altitude ?? undefined
+      });
     };
     const handlePosChangeError = (error: GeolocationPositionError) =>
       console.error(error);
 
-    const watchId: number = navigator.geolocation.watchPosition(
-      handlePosChange,
-      handlePosChangeError,
-      geoLocationProps
+    setTimeout(
+      () =>
+        navigator.geolocation.getCurrentPosition(
+          handlePosChange,
+          handlePosChangeError
+        ),
+      2000
     );
-  });
+  }, [currentGeoPos, geoLocationProps, setGeoPos]);
 
   return null;
 }
 
 export default connect(
-  null,
-  (dispatch) => {
+  (state: State) => {
     return {
-      setGeoPos: (payload: SetGeoPositionPayload) => dispatch(setGeoPos(payload))
-    }
+      currentGeoPos: state.geopos
+    };
+  },
+  dispatch => {
+    return {
+      setGeoPos: (payload: SetGeoPositionPayload) =>
+        dispatch(setGeoPos(payload))
+    };
   }
 )(GeoLocationService);

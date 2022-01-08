@@ -2,12 +2,15 @@ import { FlyToInterpolator, RGBAColor } from 'deck.gl';
 import { BuildingOptions } from './utils';
 import { ScatterplotLayerProps } from '@deck.gl/layers/scatterplot-layer/scatterplot-layer'
 
-export const MAP_STYLE: string = 'mapbox://styles/junyi00/cky44vojs0nn414nqy3x7tbr1';
+export const TITLE: string = "footprint"
+export const DESCRIPTION: string = "<description>"
+
+export const DEFAULT_MAP_STYLE: string = 'mapbox://styles/mapbox/navigation-night-v1';
 export const MAP_ZOOM: number = 16;
 export const MAP_PIN_POINT_ZOOM: number = 18;
 export const MAP_TRANSITION_DURATION: number = 3000;
-export const MAP_ANIMATION_LENGTH: number = 1800;
-export const MAP_ANIMATION_SPEED: number = 3.0;
+export const MAP_ANIMATION_LENGTH: number = 18000;
+export const MAP_ANIMATION_SPEED: number = 100;
 
 export const DEFAULT_BUILDING_OPTIONS: BuildingOptions = {
   color: '#aaa',
@@ -31,8 +34,8 @@ export const TRANS_EASE_IN_CUBIC = (x: number): number => {
 export const TRANS_INTERPOLATOR = new FlyToInterpolator();
 
 export const DEFAULT_GEOLOCATION_OPTIONS: PositionOptions = {
-  maximumAge: 1, // should be default, just in case
-  // timeout: 5000,
+  maximumAge: 0,
+  timeout: 5000,
   enableHighAccuracy: true
 };
 
@@ -47,8 +50,4 @@ export const WALK_LAYER_DEFAULT: ScatterplotLayerProps<any> = {
   radiusMaxPixels: 100,
   lineWidthMinPixels: 1,
   opacity: 0.6,
-}
-
-export interface LIVE_WALK_DATA_INTERFACE {
-  coordinates: [number, number]
 }

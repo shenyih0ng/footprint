@@ -12,7 +12,7 @@ interface LayerElementProp {
 function LayerElement({ id, boundingBox, flyToLayer }: LayerElementProp) {
     return (
         <span
-            className="py-2 px-3 my-1 antialiased bg-gray-100/75 hover:bg-gray-200 rounded-full shadow-md hover:cursor-pointer"
+            className="py-2 px-3 my-1 text-lg antialiased bg-gray-100/75 hover:bg-gray-200 rounded-full shadow-md hover:cursor-pointer"
             onClick={() => {
                 flyToLayer({
                     zoom: MAP_ZOOM + 2, // magic number

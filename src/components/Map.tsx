@@ -6,7 +6,7 @@ import { addBuildingExtrusion, BuildingOptions } from "../utils";
 import useAnimationFrame from "../hooks/AnimationFrame";
 import { State } from "../store/state"
 import { routesToTripsLayer } from "../lib/route";
-import { ViewPortState } from "../store/viewport";
+import { flyToLocation, FlyToLocationPayload, ViewPortState } from "../store/viewport";
 import { ViewStateProps } from '@deck.gl/core/lib/deck';
 import { TRANS_EASE_IN_CUBIC, TRANS_INTERPOLATOR } from "../constants";
 
@@ -16,17 +16,18 @@ interface MapProps {
     buildingOptions: BuildingOptions,
     mapStyle: string,
     animationLoopLength: number,
-    animationSpeed: number
+    animationSpeed: number,
+    flyToLocation: (payload: FlyToLocationPayload) => void;
 }
 
 function Map({ currentViewport, routeLayers, buildingOptions, mapStyle, animationLoopLength, animationSpeed }: MapProps) {
     // Animation
     const animationTime: number = useAnimationFrame({ animationLoopLength, animationSpeed })
-    const mapOnload = (event: MapLoadEvent): void => {
+    const handleMapLoad = (event: MapLoadEvent): void => {
         addBuildingExtrusion(event, buildingOptions)
     }
-    
-    const viewState: ViewStateProps  = {
+
+    const viewState: ViewStateProps = {
         ...currentViewport,
         transitionInterpolator: TRANS_INTERPOLATOR,
         transitionEasing: TRANS_EASE_IN_CUBIC
@@ -37,12 +38,12 @@ function Map({ currentViewport, routeLayers, buildingOptions, mapStyle, animatio
             ContextProvider={MapContext.Provider}
             initialViewState={viewState}
             controller={true}
-            layers={ [...routeLayers.map(routesToTripsLayer(animationTime))]}
+            layers={[...routeLayers.map(routesToTripsLayer(animationTime))]}
         >
             <NavigationControl className="absolute top-2 right-2" />
             {/* TODO Add live user marker */}
             <StaticMap
-                onLoad={mapOnload}
+                onLoad={handleMapLoad}
                 attributionControl={false}
                 mapStyle={mapStyle}
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN} />
@@ -57,4 +58,9 @@ export default connect(
             routeLayers: state.routes.layers
         }
     },
+    (dispatch) => {
+        return {
+            flyToLocation: (payload: FlyToLocationPayload) => dispatch(flyToLocation(payload))
+        }
+    }
 )(Map);

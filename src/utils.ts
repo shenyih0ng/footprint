@@ -1,7 +1,4 @@
-import { ScatterplotLayer } from 'deck.gl';
 import { MapLoadEvent } from 'react-map-gl';
-import { LIVE_WALK_DATA_INTERFACE, WALK_LAYER_DEFAULT } from './constants';
-import { ScatterplotLayerProps } from '@deck.gl/layers/scatterplot-layer/scatterplot-layer'
 
 export interface BuildingOptions {
   color: string;
@@ -48,6 +45,7 @@ export function addBuildingExtrusion(
   });
 }
 
+/*
 export function createLiveWalkLayer(layerProps: Partial<ScatterplotLayerProps<any>>, liveWalkPoints: LIVE_WALK_DATA_INTERFACE[]) {
   return new ScatterplotLayer({
     ...WALK_LAYER_DEFAULT,
@@ -59,3 +57,4 @@ export function createLiveWalkLayer(layerProps: Partial<ScatterplotLayerProps<an
     getLineCOlor: (d: any) => [255, 255, 255]
   })
 }
+*/

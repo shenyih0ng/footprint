@@ -1,32 +1,41 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { SG_LATLNG_CENTER } from '../constants';
 
 export interface GeoPositionState {
-    data: {
-      latitude: number,
-      longitude: number,
-      altitude: number | null,
-    } | null;
+  latitude: number;
+  longitude: number;
+  lastUpdated: number;
+  altitude?: number;
 }
-  
+
 export interface SetGeoPositionPayload {
-    latitude: number,
-    longitude: number,
-    altitude: number | null,
-  }
+  latitude: number;
+  longitude: number;
+  altitude?: number;
+}
 
 const geoposInitialState: GeoPositionState = {
-    data: null
+  latitude: SG_LATLNG_CENTER[0],
+  longitude: SG_LATLNG_CENTER[1],
+  lastUpdated: Date.now()
 };
 
 export const geposSlice = createSlice({
-    name: 'geopos',
-    initialState: geoposInitialState,
-    reducers: {
-      setGeoPos: (state: GeoPositionState, action: PayloadAction<SetGeoPositionPayload>) => {
-        const data: SetGeoPositionPayload = action.payload;
-        state.data = data;
-      }
+  name: 'geopos',
+  initialState: geoposInitialState,
+  reducers: {
+    setGeoPos: (
+      state: GeoPositionState,
+      action: PayloadAction<SetGeoPositionPayload>
+    ) => {
+      const { latitude, longitude, altitude }: SetGeoPositionPayload =
+        action.payload;
+      state.longitude = longitude;
+      state.latitude = latitude;
+      state.altitude = altitude;
+      state.lastUpdated = Date.now();
     }
+  }
 });
 
 export const { setGeoPos } = geposSlice.actions;

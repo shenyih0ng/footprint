@@ -19,7 +19,9 @@ export interface RouteData {
 export const routeGetPath = (routeData: RouteData) => routeData.route;
 
 export const routeGetTimestamps = (routeData: RouteData) => {
-  const totalDuration = routeData.end_timestamp - routeData.start_timestamp;
+  const totalDuration =
+    new Date(routeData.end_timestamp).getTime() -
+    new Date(routeData.start_timestamp).getTime();
   const interval = totalDuration / routeData.route.length;
   return routeData.route.map((_, idx) => interval * idx);
 };
@@ -31,6 +33,8 @@ export const routesToTripsLayer =
   (routeProp: TripsLayerProps<any>) =>
     new TripsLayer({
       ...routeProp,
+      trailLength: 10000,
+      widthMinPixels: 2.0,
       getPath: routeGetPath,
       getTimestamps: routeGetTimestamps,
       currentTime: animationTime

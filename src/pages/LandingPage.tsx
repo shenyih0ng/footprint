@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-
-const TITLE = "footprint";
-const DESCRIPTION = "description";
+import { DESCRIPTION, TITLE } from "../constants";
 
 function LandingPage() {
     return (
