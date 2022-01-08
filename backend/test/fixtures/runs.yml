@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  route: 
+  start_timestamp: 2022-01-08 02:57:53
+  end_timestamp: 2022-01-08 02:57:53
+  user_id: 1
+  active_duration: 1
+  distance: 1.5
+  mean_speed: 1.5
+  nike_id: MyText
+
+two:
+  route: 
+  start_timestamp: 2022-01-08 02:57:53
+  end_timestamp: 2022-01-08 02:57:53
+  user_id: 1
+  active_duration: 1
+  distance: 1.5
+  mean_speed: 1.5
+  nike_id: MyText

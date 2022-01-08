@@ -1,0 +1,1 @@
+rails g model Run route:path start_timestamp:datetime end_timestamp:datetime user_id:integer active_duration:integer distance:float mean_speed:float nike_id:text --force
