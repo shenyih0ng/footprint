@@ -111,9 +111,8 @@ problematic = ["data/yihongactivity-00df1fde-69a3-4035-9f2a-485900baf7b3.json",
 "data/yihong/activities-8.json"
 ]
 
-for file in Dir["data/yihong/*"]
-    if problematic.exclude?(file)
-        populate_data(file)
-    end
-end
+file = Dir["data/yihong/*"][0]
+file = File.read(file)
+data_hash = JSON.parse(file)
+
 puts "all done"
